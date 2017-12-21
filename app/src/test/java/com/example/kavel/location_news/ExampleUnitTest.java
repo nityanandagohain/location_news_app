@@ -1,4 +1,4 @@
-package com.example.nitya.news_app;
+package com.example.kavel.location_news;
 
 import org.junit.Test;
 

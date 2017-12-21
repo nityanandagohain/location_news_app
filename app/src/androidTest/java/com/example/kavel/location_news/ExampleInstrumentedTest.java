@@ -1,4 +1,4 @@
-package com.example.nitya.news_app;
+package com.example.kavel.location_news;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.nitya.news_app", appContext.getPackageName());
+        assertEquals("com.example.kavel.location_news", appContext.getPackageName());
     }
 }
