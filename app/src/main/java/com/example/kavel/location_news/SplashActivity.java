@@ -7,6 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by kavel on 19/12/17.
  */
@@ -18,9 +21,17 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Log.i("info", "splash starting");
-        Intent intent = new Intent(this, MapsActivity_main.class);
-        startActivity(intent);
-        finish();
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+
+                Intent intent = new Intent(SplashActivity.this, Menu_activity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        },1000);
+
     }
 }
 
