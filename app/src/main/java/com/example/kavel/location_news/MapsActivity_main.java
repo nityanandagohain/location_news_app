@@ -67,7 +67,6 @@ public class MapsActivity_main extends FragmentActivity implements OnMapReadyCal
 
         else
         {
-            Log.i("Info", "Application Started");
             currentLocation = locator.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
     }
