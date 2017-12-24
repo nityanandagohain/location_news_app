@@ -21,8 +21,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class currentLocationNews extends AppCompatActivity {
+
     LocationManager locator;
-    LocationListener locationListener;
     Location currentLocation;
 
     @Override
