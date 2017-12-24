@@ -31,8 +31,9 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".Menu_activity" />
-        <activity android:name=".MapsActivity_main"></activity>
-        <activity android:name=".currentLocationNews"></activity>
+        <activity android:name=".MapsActivity_main" />
+        <activity android:name=".currentLocationNews" />
+        <activity android:name=".News_Display"></activity>
     </application>
 
 </manifest>
