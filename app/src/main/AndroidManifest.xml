@@ -33,7 +33,8 @@
         <activity android:name=".Menu_activity" />
         <activity android:name=".MapsActivity_main" />
         <activity android:name=".currentLocationNews" />
-        <activity android:name=".News_Display"></activity>
+        <activity android:name=".News_Display" />
+        <activity android:name=".Location"></activity>
     </application>
 
 </manifest>

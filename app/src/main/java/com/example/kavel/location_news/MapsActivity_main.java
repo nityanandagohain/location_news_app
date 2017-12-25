@@ -32,7 +32,7 @@ public class MapsActivity_main extends FragmentActivity implements OnMapReadyCal
 
     private GoogleMap mMap;
     LocationManager locator;
-    Location currentLocation;
+    Location currentLocation=null;
     LatLng clickedLatLng;
 
     @Override
@@ -44,7 +44,9 @@ public class MapsActivity_main extends FragmentActivity implements OnMapReadyCal
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                 Log.i("Info", "Application Started");
-                currentLocation = locator.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                while(currentLocation == null) {
+                    currentLocation = locator.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                }
                 return;
             }
         }
@@ -68,7 +70,9 @@ public class MapsActivity_main extends FragmentActivity implements OnMapReadyCal
 
         else
         {
-            currentLocation = locator.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            while(currentLocation == null) {
+                currentLocation = locator.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            }
         }
     }
 

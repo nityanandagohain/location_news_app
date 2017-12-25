@@ -39,7 +39,7 @@ public class News_Display extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 10;
+            return 100;
         }
 
         @Override
