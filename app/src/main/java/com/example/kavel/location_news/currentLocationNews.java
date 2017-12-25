@@ -8,6 +8,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -22,8 +23,9 @@ import java.util.Locale;
 
 public class currentLocationNews extends AppCompatActivity {
 
-    LocationManager locator;
-    Location currentLocation;
+    LocationManager locationManager;
+    LocationListener locationListener;
+    Location currentLocation = null;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -34,8 +36,9 @@ public class currentLocationNews extends AppCompatActivity {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
 
-                currentLocation = locator.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,0, locationListener);
+
+               /*Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                 try {
                     List<Address> address = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 1);
                     if(address != null && address.size() > 0){
@@ -45,9 +48,8 @@ public class currentLocationNews extends AppCompatActivity {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
 
-                return;
             }
         }
     }
@@ -57,29 +59,59 @@ public class currentLocationNews extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_location_news);
 
-        locator = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
 
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                currentLocation = location;
+
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
+            }
+        };
+
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        } else {
+
+
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+
         }
 
-        else
-        {
+        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        try {
 
-            currentLocation = locator.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-            try {
-                List<Address> address = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 1);
-                if(address != null && address.size() > 0){
+            while (currentLocation == null){
 
-                    Toast.makeText(currentLocationNews.this, "The area is: " + address.get(0).getSubAdminArea(), Toast.LENGTH_SHORT).show();
-
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+                currentLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             }
+            List<Address> address = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 1);
+            if (address != null && address.size() > 0) {
+
+                Toast.makeText(currentLocationNews.this, "The area is: " + address.get(0).getSubAdminArea(), Toast.LENGTH_SHORT).show();
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         }
     }
-}
+
