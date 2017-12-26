@@ -32,5 +32,6 @@
             android:background="@drawable/icon1"
             android:onClick="switchToMapsActivity" />
 
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
