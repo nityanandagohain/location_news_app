@@ -32,25 +32,9 @@ public class MapsActivity_main extends FragmentActivity implements OnMapReadyCal
 
     private GoogleMap mMap;
     LocationManager locator;
-    Location currentLocation=null;
+    Location currentLocation;
+    Intent receiver;
     LatLng clickedLatLng;
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-                Log.i("Info", "Application Started");
-                while(currentLocation == null) {
-                    currentLocation = locator.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                }
-                return;
-            }
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,19 +45,9 @@ public class MapsActivity_main extends FragmentActivity implements OnMapReadyCal
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        locator = (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
-
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }
-
-        else
-        {
-            while(currentLocation == null) {
-                currentLocation = locator.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-            }
-        }
+        receiver = getIntent();
+        currentLocation = receiver.getParcelableExtra("location");
+        Log.i("CurrentLocation", currentLocation.toString());
     }
 
 
