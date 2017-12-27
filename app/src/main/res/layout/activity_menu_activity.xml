@@ -1,37 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.kavel.location_news.Menu_activity">
+    tools:actionBarNavMode="@color/colorPrimary">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="164dp"
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="85dp"
+        android:background="@color/colorAccent"
+        android:onClick="switchToLocalNewsActivity"
+        android:text="INSTANT NEWS" />
 
-        <ImageButton
-            android:id="@+id/imageButton1"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="41dp"
-            android:onClick="switchToLocalNewsActivity"
-            android:background="@drawable/icon2" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/imageButton1"
-            android:layout_marginBottom="47dp"
-            android:background="@drawable/icon1"
-            android:onClick="switchToMapsActivity" />
+    <Button
+        android:id="@+id/button8"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="164dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/button7"
+        android:layout_marginBottom="126dp"
+        android:background="@color/colorAccent"
+        android:onClick="switchToMapsActivity"
+        android:text="CHOOSE LOCATION" />
 
 
-    </RelativeLayout>
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
+
