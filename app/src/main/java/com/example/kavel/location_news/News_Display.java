@@ -42,19 +42,34 @@ public class News_Display extends AppCompatActivity {
     ArrayList<String> urlofNewsSource = new ArrayList();
     int count = 0;
 
+    public String getSearchWord(){
+
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        subAdminArea = bundle.getString("subAdminArea");
+        AdminArea = bundle.getString("AdminArea");
+
+         if(subAdminArea != null){
+
+            return  subAdminArea;
+        }
+
+        return AdminArea;
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news__display);
 
         DownloadTask task = new DownloadTask();
-        task.execute("https://newsapi.org/v2/everything?q=jorhat&apiKey=0a3f06e922a84e07b9b99fcbca201d58");
+        String searchWord = getSearchWord();
+        Log.i("searchWord", searchWord);
+        task.execute("https://newsapi.org/v2/everything?q=+" + searchWord + "&sortBy=popularity&language=en&apiKey=0a3f06e922a84e07b9b99fcbca201d58");
         newsDisplay = findViewById(R.id.listView);
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        locality = bundle.getString("locality");
-        subAdminArea = bundle.getString("subAdminArea");
-        AdminArea = bundle.getString("AdminArea");
+
 
     }
 
@@ -78,10 +93,9 @@ public class News_Display extends AppCompatActivity {
         public View getView(int i, View view, ViewGroup viewGroup) {
 
             view = getLayoutInflater().inflate(R.layout.customlayout, null);
-            ImageView newsImage = findViewById(R.id.imageView);
-            Log.i("i", Integer.toString(i));
-            TextView headline = (TextView)view.findViewById(R.id.headlineView);
-            TextView authorView = (TextView)view.findViewById(R.id.authorView);
+            ImageView newsImage = view.findViewById(R.id.imageView);
+            TextView headline = view.findViewById(R.id.headlineView);
+            TextView authorView =view.findViewById(R.id.authorView);
 
             if(titles.get(i) != null) {
 
