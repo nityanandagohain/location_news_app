@@ -2,17 +2,21 @@ package com.example.kavel.location_news;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -74,8 +78,14 @@ public class News_Display extends AppCompatActivity {
             listview.setVisibility(View.VISIBLE);
         }
 
+        newsDisplay.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlofNewsSource.get(position)));
+                startActivity(browserIntent);
+            }
+        });
 
     }
 

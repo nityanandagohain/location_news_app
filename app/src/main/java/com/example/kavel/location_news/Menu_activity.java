@@ -4,6 +4,8 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.annotation.NonNull;
@@ -13,6 +15,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class Menu_activity extends AppCompatActivity {
 
@@ -28,11 +34,27 @@ public class Menu_activity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void switchToLocalNewsActivity(View view){
+    public void switchToLocalNewsActivity(View view) {
 
-        intent = new Intent(getApplicationContext(), currentLocationNews.class);
-        intent.putExtra("location", location);
-        startActivity(intent);
+        intent = new Intent(getApplicationContext(), News_Display.class);
+        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        try {
+            List<Address> address = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            if (address != null && address.size() > 0) {
+
+                String subAdminArea = address.get(0).getSubAdminArea();
+                String AdminArea = address.get(0).getAdminArea();
+
+                Intent intent = new Intent(getApplicationContext(), News_Display.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("AdminArea", AdminArea);
+                bundle.putString("subAdminArea", subAdminArea);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
