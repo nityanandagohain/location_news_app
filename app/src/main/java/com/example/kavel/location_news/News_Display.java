@@ -2,6 +2,7 @@ package com.example.kavel.location_news;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +34,8 @@ public class News_Display extends AppCompatActivity {
     String subAdminArea;
     String AdminArea;
     ArrayList<String> titles = new ArrayList();
+    private ProgressBar progressbar;
+    private ListView listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,18 @@ public class News_Display extends AppCompatActivity {
         ListView newsDisplay = findViewById(R.id.listView);
         CustomAdapter customAdapter = new CustomAdapter();
         newsDisplay.setAdapter(customAdapter);
+
+        progressbar=(ProgressBar) findViewById(R.id.progressBar2);
+        listview=(ListView) findViewById(R.id.listView);
+
+
+        if(!titles.isEmpty()){
+            progressbar.setVisibility(View.INVISIBLE);
+            listview.setVisibility(View.VISIBLE);
+        }
+
+
+
 
     }
 
@@ -131,6 +147,10 @@ public class News_Display extends AppCompatActivity {
                 String articles = newsJSON.getString("articles");
                 JSONArray arr = new JSONArray(articles);
                 for(int i = 0; i < arr.length(); i++){
+                    if(i==0){
+                            progressbar.setVisibility(View.INVISIBLE);
+                            listview.setVisibility(View.VISIBLE);
+                    }
 
                     JSONObject jsonPart = arr.getJSONObject(i);
                     titles.add(jsonPart.getString("title"));
