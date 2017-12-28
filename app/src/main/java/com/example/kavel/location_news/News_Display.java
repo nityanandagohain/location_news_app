@@ -110,17 +110,21 @@ public class News_Display extends AppCompatActivity {
             }
             else{
 
-                Log.i("title", "null");
+                Log.i("title", "N/A");
 
             }
 
             if(author.get(i) != null) {
-
-                authorView.setText(author.get(i));
+                if(author.get(i).equals("null")){
+                    authorView.setText("N/A");
+                }
+                else {
+                    authorView.setText(author.get(i));
+                }
             }
             else
             {
-                Log.i("title", "null");
+                Log.i("title", "N/A");
             }
             return view;
         }
