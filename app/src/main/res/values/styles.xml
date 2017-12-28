@@ -11,4 +11,8 @@
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/background</item>
     </style>
+
+    <style name="AppTheme.WhiteAccent">
+        <item name="colorAccent">@color/prog</item> <!-- Whatever color you want-->
+    </style>
 </resources>

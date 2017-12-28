@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,10 +40,11 @@ public class News_Display extends AppCompatActivity {
     String AdminArea;
     ListView newsDisplay;
     ArrayList<String> titles = new ArrayList();
+    private ProgressBar progressbar;
+    private ListView listview;
     ArrayList<String> author = new ArrayList();
     ArrayList<String> urlofNewsSource = new ArrayList();
     int count = 0;
-
     public String getSearchWord(){
 
 
@@ -58,7 +61,6 @@ public class News_Display extends AppCompatActivity {
         return AdminArea;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +71,18 @@ public class News_Display extends AppCompatActivity {
         Log.i("searchWord", searchWord);
         task.execute("https://newsapi.org/v2/everything?q=+" + searchWord + "&sortBy=popularity&language=en&apiKey=0a3f06e922a84e07b9b99fcbca201d58");
         newsDisplay = findViewById(R.id.listView);
+
+
+        progressbar=(ProgressBar) findViewById(R.id.progressBar2);
+        listview=(ListView) findViewById(R.id.listView);
+
+
+        if(!titles.isEmpty()){
+            progressbar.setVisibility(View.INVISIBLE);
+            listview.setVisibility(View.VISIBLE);
+        }
+
+
 
 
     }
@@ -164,6 +178,10 @@ public class News_Display extends AppCompatActivity {
                 String articles = newsJSON.getString("articles");
                 JSONArray arr = new JSONArray(articles);
                 for(int i = 0; i < arr.length(); i++){
+                    if(i==0){
+                            progressbar.setVisibility(View.INVISIBLE);
+                            listview.setVisibility(View.VISIBLE);
+                    }
 
                     count = i;
                     JSONObject jsonPart = arr.getJSONObject(i);
