@@ -81,13 +81,11 @@ public class MapsActivity_main extends FragmentActivity implements OnMapReadyCal
                     List<Address> address = geocoder.getFromLocation(clickedLatLng.latitude, clickedLatLng.longitude,1);
                     if(address != null && address.size() > 0){
 
-                        String locality = address.get(0).getLocality();
                         String subAdminArea = address.get(0).getSubAdminArea();
                         String AdminArea = address.get(0).getAdminArea();
 
                         Intent intent = new Intent(getApplicationContext(), News_Display.class);
                         Bundle bundle = new Bundle();
-                        bundle.putString("locality", locality);
                         bundle.putString("AdminArea", AdminArea);
                         bundle.putString("subAdminArea", subAdminArea);
                         intent.putExtras(bundle);
