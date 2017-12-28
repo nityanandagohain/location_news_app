@@ -1,30 +1,22 @@
 package com.example.kavel.location_news;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
+import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,9 +25,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+
 public class News_Display extends AppCompatActivity {
 
-    String locality;
     String subAdminArea;
     String AdminArea;
     ListView newsDisplay;
@@ -44,7 +36,9 @@ public class News_Display extends AppCompatActivity {
     private ListView listview;
     ArrayList<String> author = new ArrayList();
     ArrayList<String> urlofNewsSource = new ArrayList();
+    ArrayList<String> urlofImageSource = new ArrayList();
     int count = 0;
+
     public String getSearchWord(){
 
 
@@ -71,10 +65,8 @@ public class News_Display extends AppCompatActivity {
         Log.i("searchWord", searchWord);
         task.execute("https://newsapi.org/v2/everything?q=+" + searchWord + "&sortBy=popularity&language=en&apiKey=0a3f06e922a84e07b9b99fcbca201d58");
         newsDisplay = findViewById(R.id.listView);
-
-
-        progressbar=(ProgressBar) findViewById(R.id.progressBar2);
-        listview=(ListView) findViewById(R.id.listView);
+        progressbar = findViewById(R.id.progressBar2);
+        listview = findViewById(R.id.listView);
 
 
         if(!titles.isEmpty()){
@@ -110,6 +102,7 @@ public class News_Display extends AppCompatActivity {
             ImageView newsImage = view.findViewById(R.id.imageView);
             TextView headline = view.findViewById(R.id.headlineView);
             TextView authorView =view.findViewById(R.id.authorView);
+            Picasso.with(News_Display.this).load(urlofImageSource.get(i)).into(newsImage);
 
             if(titles.get(i) != null) {
 
@@ -150,7 +143,7 @@ public class News_Display extends AppCompatActivity {
                 InputStreamReader reader = new InputStreamReader(in);
                 int data = reader.read();
 
-                while (data != -1){
+                while (data != -1) {
 
                     char current = (char) data;
                     result += current;
@@ -177,10 +170,10 @@ public class News_Display extends AppCompatActivity {
                 JSONObject newsJSON = new JSONObject(s);
                 String articles = newsJSON.getString("articles");
                 JSONArray arr = new JSONArray(articles);
-                for(int i = 0; i < arr.length(); i++){
-                    if(i==0){
-                            progressbar.setVisibility(View.INVISIBLE);
-                            listview.setVisibility(View.VISIBLE);
+                for (int i = 0; i < arr.length(); i++) {
+                    if (i == 0) {
+                        progressbar.setVisibility(View.INVISIBLE);
+                        listview.setVisibility(View.VISIBLE);
                     }
 
                     count = i;
@@ -188,9 +181,7 @@ public class News_Display extends AppCompatActivity {
                     titles.add(jsonPart.getString("title"));
                     author.add(jsonPart.getString("author"));
                     urlofNewsSource.add(jsonPart.getString("url"));
-                    Log.i("titles", titles.get(count));
-                    Log.i("author", author.get(count));
-                    Log.i("urlofNewsSource", urlofNewsSource.get(count));
+                    urlofImageSource.add(jsonPart.getString("urlToImage"));
 
                 }
 
@@ -205,4 +196,5 @@ public class News_Display extends AppCompatActivity {
 
         }
     }
+
 }
