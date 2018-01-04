@@ -28,6 +28,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class News_Display extends AppCompatActivity {
@@ -35,12 +37,15 @@ public class News_Display extends AppCompatActivity {
     String subAdminArea;
     String AdminArea;
     ListView newsDisplay;
+    TextView descriptionDisplay;
     ArrayList<String> titles = new ArrayList();
     private ProgressBar progressbar;
     private ListView listview;
     ArrayList<String> author = new ArrayList();
     ArrayList<String> urlofNewsSource = new ArrayList();
     ArrayList<String> urlofImageSource = new ArrayList();
+    ArrayList<String> description = new ArrayList();
+
     int count = 0;
 
     public String getSearchWord(){
@@ -72,8 +77,7 @@ public class News_Display extends AppCompatActivity {
         progressbar = findViewById(R.id.progressBar2);
         listview = findViewById(R.id.listView);
 
-
-        if(!titles.isEmpty()){
+        if (!titles.isEmpty()) {
             progressbar.setVisibility(View.INVISIBLE);
             listview.setVisibility(View.VISIBLE);
         }
@@ -86,7 +90,6 @@ public class News_Display extends AppCompatActivity {
                 startActivity(browserIntent);
             }
         });
-
     }
 
     public class CustomAdapter extends BaseAdapter{
@@ -196,12 +199,13 @@ public class News_Display extends AppCompatActivity {
                     author.add(jsonPart.getString("author"));
                     urlofNewsSource.add(jsonPart.getString("url"));
                     urlofImageSource.add(jsonPart.getString("urlToImage"));
+                    description.add((jsonPart.getString("description")));
+
 
                 }
 
                 CustomAdapter customAdapter = new CustomAdapter();
                 newsDisplay.setAdapter(customAdapter);
-
             } catch (JSONException e) {
                 e.printStackTrace();
                 Log.i("Error occured", "Error");

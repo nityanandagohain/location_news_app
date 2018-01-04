@@ -57,6 +57,13 @@ public class Menu_activity extends AppCompatActivity {
         }
     }
 
+    public void switchToCustomSearchActivity(View view){
+
+        intent = new Intent(getApplicationContext(), CustomSearchActivity.class);
+        startActivity(intent);
+
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
