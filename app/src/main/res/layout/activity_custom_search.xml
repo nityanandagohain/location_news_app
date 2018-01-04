@@ -6,119 +6,43 @@
     android:layout_height="match_parent"
     tools:context="com.example.kavel.location_news.CustomSearchActivity">
 
-    <Button
-        android:id="@+id/button3"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="100dp"
-        android:layout_height="48dp"
-        android:layout_below="@+id/radioGroup2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="81dp"
-        android:background="@color/colorAccent"
-        android:fontFamily="serif"
-        android:text="GO"
-        android:textSize="30sp" />
-
     <EditText
         android:id="@+id/editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView"
-        android:layout_below="@+id/textView"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Keyword" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
-        android:fontFamily="serif"
-        android:text="Enter the search word: "
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="35sp" />
+        android:layout_marginTop="83dp"
+        android:ems="10"
+        android:hint="location" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/spinnerFilter"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editText"
         android:layout_below="@+id/editText"
-        android:layout_marginTop="22dp"
-        android:fontFamily="sans-serif"
-        android:text="Filters: "
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="37sp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="93dp"
+        android:entries="@array/filters" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+    <Spinner
+        android:id="@+id/spinnersortby"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/radioGroup"
-        android:layout_below="@+id/radioGroup"
-        android:layout_marginTop="24dp"
-        android:fontFamily="sans-serif"
-        android:text="Sort by: "
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="37sp" />
+        android:layout_below="@+id/spinnerFilter"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="86dp"
+        android:entries="@array/sort_by" />
 
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="18dp"
-        android:orientation="vertical"
-        android:id="@+id/radioGroup">
-
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:buttonTint="?attr/actionModeSplitBackground"
-            android:text="Top Headlines" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:buttonTint="?attr/actionModeSplitBackground"
-            android:text="Everything" />
-
-    </RadioGroup>
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView3"
-        android:layout_below="@+id/textView3"
-        android:layout_marginTop="19dp"
-        android:id="@+id/radioGroup2"
-        android:orientation="vertical">
-
-        <RadioButton
-            android:id="@+id/radioButton6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:buttonTint="?attr/actionModeSplitBackground"
-            android:text="Date published" />
-
-        <RadioButton
-            android:id="@+id/radioButton7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:buttonTint="?attr/actionModeSplitBackground"
-            android:text="Relevancy" />
-
-        <RadioButton
-            android:id="@+id/radioButton8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:buttonTint="?attr/actionModeSplitBackground"
-            android:text="Popularity" />
-    </RadioGroup>
+    <Button
+        android:id="@+id/push_button"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="56dp"
+        android:background="@drawable/button_bg_round"
+        android:padding="15dp"
+        android:text="Go" />
 
 </RelativeLayout>
