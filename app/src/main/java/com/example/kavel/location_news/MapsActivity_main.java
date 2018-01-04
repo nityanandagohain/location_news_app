@@ -35,6 +35,8 @@ public class MapsActivity_main extends FragmentActivity implements OnMapReadyCal
     Location currentLocation;
     Intent receiver;
     LatLng clickedLatLng;
+    int uniqueId = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,7 @@ public class MapsActivity_main extends FragmentActivity implements OnMapReadyCal
                         Bundle bundle = new Bundle();
                         bundle.putString("AdminArea", AdminArea);
                         bundle.putString("subAdminArea", subAdminArea);
+                        bundle.putInt("uniqueId", uniqueId);
                         intent.putExtras(bundle);
                         startActivity(intent);
 
