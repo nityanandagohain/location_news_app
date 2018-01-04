@@ -74,7 +74,6 @@ public class MapsActivity_main extends FragmentActivity implements OnMapReadyCal
 
             @Override
             public void onMapClick(LatLng point) {
-                // TODO Auto-generated method stub
                 clickedLatLng = point;
                 Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                 try {

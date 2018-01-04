@@ -21,9 +21,21 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="164dp"
         android:layout_height="48dp"
+        android:layout_alignStart="@+id/button7"
+        android:layout_below="@+id/button7"
+        android:layout_marginTop="150dp"
+        android:background="@color/colorAccent"
+        android:onClick="switchToCustomSearchActivity"
+        android:text="CUSTOM SEARCH" />
+
+    <Button
+        android:id="@+id/button2"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="164dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:layout_alignStart="@+id/button7"
-        android:layout_marginBottom="126dp"
+        android:layout_marginBottom="109dp"
         android:background="@color/colorAccent"
         android:onClick="switchToMapsActivity"
         android:text="CHOOSE LOCATION" />
