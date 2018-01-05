@@ -26,6 +26,7 @@ public class Menu_activity extends AppCompatActivity {
     boolean network_enabled;
     Location location;
     Intent intent;
+    int uniqueId = 1;
 
     public void switchToMapsActivity(View view){
 
@@ -49,6 +50,7 @@ public class Menu_activity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("AdminArea", AdminArea);
                 bundle.putString("subAdminArea", subAdminArea);
+                bundle.putInt("uniqueId", uniqueId);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

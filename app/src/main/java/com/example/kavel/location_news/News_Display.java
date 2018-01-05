@@ -34,25 +34,26 @@ import java.util.TimerTask;
 
 public class News_Display extends AppCompatActivity {
 
-    String subAdminArea;
-    String AdminArea;
+    String subAdminArea = null;
+    String AdminArea = null;
     ListView newsDisplay;
     TextView descriptionDisplay;
     ArrayList<String> titles = new ArrayList();
     private ProgressBar progressbar;
     private ListView listview;
+    Intent intent;
+    Bundle bundle;
+    int uniqueId;
     ArrayList<String> author = new ArrayList();
     ArrayList<String> urlofNewsSource = new ArrayList();
     ArrayList<String> urlofImageSource = new ArrayList();
     ArrayList<String> description = new ArrayList();
-
     int count = 0;
 
     public String getSearchWord(){
 
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+
         subAdminArea = bundle.getString("subAdminArea");
         AdminArea = bundle.getString("AdminArea");
 
@@ -69,10 +70,25 @@ public class News_Display extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news__display);
 
+        intent = getIntent();
+        bundle = intent.getExtras();
+        uniqueId = bundle.getInt("uniqueId");
+        Log.i("info", Integer.toString(uniqueId));
         DownloadTask task = new DownloadTask();
-        String searchWord = getSearchWord();
-        Log.i("searchWord", searchWord);
-        task.execute("https://newsapi.org/v2/everything?q=+" + searchWord + "&sortBy=popularity&language=en&apiKey=0a3f06e922a84e07b9b99fcbca201d58");
+        if(uniqueId == 1){
+
+            Log.i("info", getSearchWord());
+            task.execute("https://newsapi.org/v2/everything?q=+" + getSearchWord() + "&sortBy=popularity&language=en&apiKey=0a3f06e922a84e07b9b99fcbca201d58");
+        }
+
+        else if(uniqueId == 2){
+
+            Log.i("info", bundle.getString("selectedFilter"));
+            Log.i("info", bundle.getString("keyword"));
+            Log.i("info", bundle.getString("SelectedSortItem"));
+            task.execute("https://newsapi.org/v2/" + bundle.getString("selectedFilter") + "?q=+" + bundle.getString("keyword") + "&sortBy= " + bundle.getString("SelectedSortItem") + "&language=en&apiKey=0a3f06e922a84e07b9b99fcbca201d58");
+
+        }
         newsDisplay = findViewById(R.id.listView);
         progressbar = findViewById(R.id.progressBar2);
         listview = findViewById(R.id.listView);
