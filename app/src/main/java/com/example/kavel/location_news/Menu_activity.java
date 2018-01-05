@@ -98,6 +98,8 @@ public class Menu_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_activity);
 
+
+
         locManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
         network_enabled = locManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 

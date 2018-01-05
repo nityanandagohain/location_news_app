@@ -20,6 +20,7 @@ public class SplashActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
