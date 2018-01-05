@@ -1,9 +1,14 @@
 package com.example.kavel.location_news;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +20,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,8 +31,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class News_Display extends AppCompatActivity {
@@ -37,7 +38,6 @@ public class News_Display extends AppCompatActivity {
     String subAdminArea = null;
     String AdminArea = null;
     ListView newsDisplay;
-    TextView descriptionDisplay;
     ArrayList<String> titles = new ArrayList();
     private ProgressBar progressbar;
     private ListView listview;
@@ -65,48 +65,87 @@ public class News_Display extends AppCompatActivity {
         return AdminArea;
     }
 
+    private boolean haveNetworkConnection() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news__display);
 
-        intent = getIntent();
-        bundle = intent.getExtras();
-        uniqueId = bundle.getInt("uniqueId");
-        Log.i("info", Integer.toString(uniqueId));
-        DownloadTask task = new DownloadTask();
-        if(uniqueId == 1){
+        if (haveNetworkConnection()) {
+            intent = getIntent();
+            bundle = intent.getExtras();
+            uniqueId = bundle.getInt("uniqueId");
+            Log.i("info", Integer.toString(uniqueId));
+            DownloadTask task = new DownloadTask();
+            if (uniqueId == 1) {
 
-            Log.i("info", getSearchWord());
-            task.execute("https://newsapi.org/v2/everything?q=+" + getSearchWord() + "&sortBy=popularity&language=en&apiKey=0a3f06e922a84e07b9b99fcbca201d58");
-        }
+                Log.i("info", getSearchWord());
+                task.execute("https://newsapi.org/v2/everything?q=+" + getSearchWord() + "&sortBy=popularity&language=en&apiKey=0a3f06e922a84e07b9b99fcbca201d58");
+            } else if (uniqueId == 2) {
 
-        else if(uniqueId == 2){
+                Log.i("info", bundle.getString("selectedFilter"));
+                Log.i("info", bundle.getString("keyword"));
+                Log.i("info", bundle.getString("SelectedSortItem"));
+                task.execute("https://newsapi.org/v2/" + bundle.getString("selectedFilter") + "?q=+" + bundle.getString("keyword") + "&sortBy= " + bundle.getString("SelectedSortItem") + "&language=en&apiKey=0a3f06e922a84e07b9b99fcbca201d58");
 
-            Log.i("info", bundle.getString("selectedFilter"));
-            Log.i("info", bundle.getString("keyword"));
-            Log.i("info", bundle.getString("SelectedSortItem"));
-            task.execute("https://newsapi.org/v2/" + bundle.getString("selectedFilter") + "?q=+" + bundle.getString("keyword") + "&sortBy= " + bundle.getString("SelectedSortItem") + "&language=en&apiKey=0a3f06e922a84e07b9b99fcbca201d58");
-
-        }
-        newsDisplay = findViewById(R.id.listView);
-        progressbar = findViewById(R.id.progressBar2);
-        listview = findViewById(R.id.listView);
-
-        if (!titles.isEmpty()) {
-            progressbar.setVisibility(View.INVISIBLE);
-            listview.setVisibility(View.VISIBLE);
-        }
-
-        newsDisplay.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlofNewsSource.get(position)));
-                startActivity(browserIntent);
             }
-        });
+            newsDisplay = findViewById(R.id.listView);
+            progressbar = findViewById(R.id.progressBar2);
+            listview = findViewById(R.id.listView);
+
+            if (!titles.isEmpty()) {
+                progressbar.setVisibility(View.INVISIBLE);
+                listview.setVisibility(View.VISIBLE);
+            }
+
+            newsDisplay.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlofNewsSource.get(position)));
+                    startActivity(browserIntent);
+                }
+            });
+        }
+        else {
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Connection Error. ")
+                    .setMessage("Please enable your internet connection. ")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
+                        }
+                    })
+                    .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    })
+                    .show();
+        }
     }
+
+
 
     public class CustomAdapter extends BaseAdapter{
         @Override

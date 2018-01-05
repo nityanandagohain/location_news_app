@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.List;
@@ -55,7 +56,8 @@ public class Menu_activity extends AppCompatActivity {
                 startActivity(intent);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+
+            Toast.makeText(this, "Enable your internet connection to continue. ", Toast.LENGTH_LONG).show();
         }
     }
 
