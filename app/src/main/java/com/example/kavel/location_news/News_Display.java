@@ -131,8 +131,16 @@ public class News_Display extends AppCompatActivity {
             ImageView newsImage = view.findViewById(R.id.imageView);
             TextView headline = view.findViewById(R.id.headlineView);
             TextView authorView =view.findViewById(R.id.authorView);
-            Picasso.with(News_Display.this).load(urlofImageSource.get(i)).into(newsImage);
+            if(urlofImageSource.get(i).equals("null")) {
 
+                Picasso.with(News_Display.this).load(R.drawable.no_image_available).fit().centerCrop().into(newsImage);
+            }
+            else{
+
+                Picasso.with(News_Display.this).load(urlofImageSource.get(i)).fit().centerCrop().into(newsImage);
+
+
+            }
             if(titles.get(i) != null) {
 
                 headline.setText(titles.get(i));
